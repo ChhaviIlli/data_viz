@@ -161,8 +161,8 @@ async function init(){
 	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,20]).range([height,0]);
-	var x_axis=d3.axisBottom(xScale).tickValues([10,20,30,40]).tickFormat(d3.format(".0f"));
-	var y_axis=d3.axisLeft(yScale).tickValues([4,8,12,16]).tickFormat(d3.format(".0f"));
+	var x_axis=d3.axisBottom(xScale)//.tickValues([10,20,30,40]).tickFormat(d3.format(".0f"));
+	var y_axis=d3.axisLeft(yScale)//.tickValues([4,8,12,16]).tickFormat(d3.format(".0f"));
 
 	var g = svg.append("g")
 		g.attr("transform","translate(50,50)")
@@ -174,28 +174,30 @@ async function init(){
 		   .attr("r",4);
 
 	var g = svg.append("g");
-	   g.append("text")
+	    g.attr("transform","translate(50,50)").call(y_axis)
+	     .append("text")
 	    .attr("text-anchor", "end")
 	    .attr("transform", "rotate(-90)")
-	    .attr("x", 10)
+	    .attr("x", 20)
 	    .attr("y", height/2+margin)
-	    .text("Death Ratev1");
-	    g.attr("transform","translate(50,50)").call(y_axis);
+	    .text("Death Rate");
             
 	var g = svg.append("g");
-	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
+	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis)
+	     .append("text")
+	    .attr("text-anchor", "end")
+	    .attr("transform", "rotate(-90)")
+	    .attr("x", width/2)
+	    .attr("y", 20)
+	    .text("Birth Rate");
 		
-	var g = svg.append("g")
-	     g.attr("transform","translate(0,50)")
-	     
-	
 	var g = svg.append("g")
 	g.attr("transform","translate("+margin+","+(height+margin)+")")
 	  .append("line")
 	  .attr("style", "stroke:black")
-	  .attr("x1", 0)
+	  .attr("x1", xScale(0))
 	  .attr("x2", xScale(20))
-	  .attr("y1", 0)
+	  .attr("y1", yScale(0))
 	  .attr("y2", yScale(20));
 	
 	  color = d3.scaleSequential(d3.interpolateMagma).domain([0,0,1]);
