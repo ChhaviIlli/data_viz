@@ -213,10 +213,28 @@ async function init(){
 	     g.attr("transform","translate(0,50)")
 	     .append("text")
 	    .attr("text-anchor", "end")
-	    .attr("transform", "rotate(90)")
+	    .attr("transform", "rotate(-90)")
 	    .attr("x", 0)
-	    .attr("y", 0)
+	    .attr("y", height/2+margin)
 	    .text("Death Ratev1");
+	
+	svg.append("g")
+  .attr("class", "x axis")
+  .attr("transform", "translate(0," + height + ")")
+  .append("text")
+  .text("State")
+  .attr("transform", function(d) {
+    return "translate(" + this.parentNode.getBBox().width / 2 + "," + 50 + ")";
+  });
+
+
+svg.append("g")
+  .attr("class", "y axis")
+  .append("text")
+  .text("Population")
+  .attr("transform", function(d) {
+    return "translate(" + -50 + "," + this.parentNode.getBBox().height / 2 + ") rotate(-90)";
+  });
 	
 	var g = svg.append("g")
 	g.attr("transform","translate("+margin+","+(height+margin)+")")
