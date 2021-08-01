@@ -194,13 +194,13 @@ async function init(){
            .attr('y', margin / 2.4)
            .attr('transform', 'rotate(-90)')
            .attr('text-anchor', 'middle')
-           .text('Death Rate')
+           .text('Death Rate');
 
 	svg.append('text')
 	    .attr('x', width / 2 + margin)
-	    .attr('y', 40)
+	    .attr('y', height+margin)
 	    .attr('text-anchor', 'middle')
-	    .text('Birth Rate')
+	    .text('Birth Rate');
 	var g = svg.append("g");
 	    g.attr("transform","translate(50,50)").call(y_axis);
 	    
@@ -213,8 +213,7 @@ async function init(){
 	   // .attr("y", 20+margin+height)
 	   // .text("Birth Rate");
 		
-	var g = svg.append("g");
-	g.attr("transform","translate("+margin+","+(height+margin)+")")
+	var g = svg.append("g")
 	  .append("line")
 	  .attr("style", "stroke:black")
 	  .attr("x2", xScale(0))
