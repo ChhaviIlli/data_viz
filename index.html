@@ -191,18 +191,22 @@ async function init(){
 	 //.attr("y", height/2+margin)
 	 //.text("Death Rate per thousand");
 	// Add X axis label:
-	svg.append("g").append("text")
+	g=svg.append("g")
+	    g.attr("transform","translate(50,"+(height+margin)+")")
+	    .append("text")
 	    .attr("text-anchor", "end")
-	    .attr("x", width/2+margin)
-	    .attr("y", height + margin)
+	    .attr("x", width/2+ 20)
+	    .attr("y", margin)
 	    .text("Birth Rate");
 
 	// Y axis label:
-	svg.append("g").append("text")
+	g=svg.append("g")
+	     g.attr("transform","translate(50,50)")
+	     .append("text")
 	    .attr("text-anchor", "end")
 	    .attr("transform", "rotate(-90)")
-	    .attr("y", height/2)
-	    .attr("x", 20)
+	    .attr("y", height)
+	    .attr("x", -20)
 	    .text("Death Rate");
 	
 	svg.append("g")
@@ -212,6 +216,26 @@ async function init(){
 	  .attr("x2", x(20))
 	  .attr("y1", y(0))
 	  .attr("y2", y(20));
+	
+	  color = d3.scaleSequential(d3.interpolateMagma)
+    .domain([0,0,1]);
+   
+  contours = d3.contourDensity()
+     .x(function(d,i){return xScale(d.g_bar);})
+     .y(function(d,i){return yScale(d.g_obs);})
+	 .size([width,height])
+	 .bandwidth(20);
+	 
+	 d3.select("#chartbox")
+	   .selectAll("path")
+	   .data(countours(data))
+	   .enter()
+	   .append("path")
+	   .attr("class", "contour")
+	   .attr("stroke","green")
+	   .attr("fill", "none")
+	   .attr("d", d3.geoPath());
+
 	
 
 }
