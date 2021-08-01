@@ -193,16 +193,16 @@ async function init(){
 	// Add X axis label:
 	svg.append("g").append("text")
 	    .attr("text-anchor", "end")
-	    .attr("x", width/2)
-	    .attr("y", height + margin + 20)
+	    .attr("x", width/2+margin)
+	    .attr("y", height + margin)
 	    .text("Birth Rate");
 
 	// Y axis label:
 	svg.append("g").append("text")
 	    .attr("text-anchor", "end")
 	    .attr("transform", "rotate(-90)")
-	    .attr("y", height/2+margin)
-	    .attr("x", margin/2)
+	    .attr("y", height/2)
+	    .attr("x", 20)
 	    .text("Death Rate");
 	
 	svg.append("g")
