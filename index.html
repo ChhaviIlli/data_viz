@@ -210,6 +210,15 @@ async function init(){
 	    .text("Death Rate");
 	
 	var g = svg.append("g")
+	     g.attr("transform","translate(0,50)")
+	     .append("text")
+	    .attr("text-anchor", "end")
+	    .attr("transform", "rotate(90)")
+	    .attr("x", 0)
+	    .attr("y", 0)
+	    .text("Death Ratev1");
+	
+	var g = svg.append("g")
 	g.attr("transform","translate("+margin+","+(height+margin)+")")
 	  .append("line")
 	  .attr("style", "stroke:black")
@@ -241,9 +250,9 @@ async function init(){
  .size([width,height])
 .bandwidth(20);
 	 
- d3.select("#chartbox")
+ d3.select("svg")
   .selectAll("path")
-  .data(contours(data))
+  .data(contours(pop_data2018))
   .enter()
   .append("path")
   .attr("class", "contour")
