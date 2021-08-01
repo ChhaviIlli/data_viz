@@ -161,8 +161,8 @@ async function init(){
 	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,20]).range([height,0]);
-	var x_axis=d3.axisBottom(xScale)//.tickValues([10,20,30,40]).tickFormat(d3.format(".0f"));
-	var y_axis=d3.axisLeft(yScale)//.tickValues([4,8,12,16]).tickFormat(d3.format(".0f"));
+	var x_axis=d3.axisBottom(xScale);
+	var y_axis=d3.axisLeft(yScale);
 
 	var g = svg.append("g")
 		g.attr("transform","translate(50,50)")
@@ -186,12 +186,11 @@ async function init(){
 	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis)
 	     .append("text")
 	    .attr("text-anchor", "end")
-	    .attr("transform", "rotate(-90)")
 	    .attr("x", width/2)
 	    .attr("y", 20)
 	    .text("Birth Rate");
 		
-	var g = svg.append("g")
+	var g = svg.append("g");
 	g.attr("transform","translate("+margin+","+(height+margin)+")")
 	  .append("line")
 	  .attr("style", "stroke:black")
@@ -213,7 +212,6 @@ async function init(){
             .append("path")
             .attr("d", d3.geoPath())
 	    .attr("stroke", "green");
-            //.attr("fill", "none")
        
 
 	
