@@ -179,17 +179,31 @@ async function init(){
 	g=svg.append("g");
 	g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
 	
-	g=svg.append("g");
-	g.append("text")
-	 .attr("x", width/2)
-	 .attr("y", height+(margin*1.5))
-	 .text("Birth Rate per thousand");
+	//g=svg.append("g");
+	//g.append("text")
+	 //.attr("x", width/2)
+	 //.attr("y", height+(margin*1.5))
+	 //.text("Birth Rate per thousand");
 	
-       	g=svg.append("g");
-	g.append("text")
-	 .attr("x", margin/2)
-	 .attr("y", height/2+margin)
-	 .text("Death Rate per thousand");
+       	//g=svg.append("g");
+	//g.append("text")
+	 //.attr("x", margin/2)
+	 //.attr("y", height/2+margin)
+	 //.text("Death Rate per thousand");
+	// Add X axis label:
+	svg.append("text")
+	    .attr("text-anchor", "end")
+	    .attr("x", width)
+	    .attr("y", height + margin + 20)
+	    .text("Birth Rate");
+
+	// Y axis label:
+	svg.append("text")
+	    .attr("text-anchor", "end")
+	    .attr("transform", "rotate(-90)")
+	    .attr("y", -margin+20)
+	    .attr("x", -margin)
+	    .text("Death Rate")
 
 }
 
