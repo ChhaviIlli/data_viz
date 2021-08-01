@@ -170,8 +170,7 @@ async function init(){
   .text("Population")
   .attr("transform", function(d) {
     return "translate(" + 1 + "," + this.parentNode.getBBox().height / 2 + ") rotate(-90)";
-  });
-	      .tickValues([4,8,12,16]).tickFormat(d3.format(".0f"));
+  }).tickValues([4,8,12,16]).tickFormat(d3.format(".0f"));
 
 	var g = svg.append("g")
 		g.attr("transform","translate(50,50)")
