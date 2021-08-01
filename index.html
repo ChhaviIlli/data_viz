@@ -173,11 +173,11 @@ async function init(){
 		   .attr("cy",function(d) {return yScale(d.CDR);})
 		   .attr("r",4);
 
-	g=svg.append("g");
-	g.attr("transform","translate(50,50)").call(y_axis);
+	var g = svg.append("g");
+	    g.attr("transform","translate(50,50)").call(y_axis);
 
-	g=svg.append("g");
-	g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
+	var g = svg.append("g");
+	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
 	
 	//g=svg.append("g");
 	//g.append("text")
@@ -191,7 +191,7 @@ async function init(){
 	 //.attr("y", height/2+margin)
 	 //.text("Death Rate per thousand");
 	// Add X axis label:
-	g=svg.append("g")
+	var g = svg.append("g")
 	    g.attr("transform","translate(50,"+(height+margin)+")")
 	    .append("text")
 	    .attr("text-anchor", "end")
@@ -200,7 +200,7 @@ async function init(){
 	    .text("Birth Rate");
 
 	// Y axis label:
-	g=svg.append("g")
+	var g = svg.append("g")
 	     g.attr("transform","translate(50,50)")
 	     .append("text")
 	    .attr("text-anchor", "end")
@@ -209,7 +209,7 @@ async function init(){
 	    .attr("y", height+margin)
 	    .text("Death Rate");
 	
-	g=svg.append("g")
+	var g = svg.append("g")
 	g.attr("transform","translate("+margin+","+(height+margin)+")")
 	  .append("line")
 	  .attr("style", "stroke:black")
