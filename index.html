@@ -148,10 +148,10 @@ async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	console.log(pop_data);
 	const pop_data2018 = pop_data.filter(function(d){
-				    if(d["MidPeriod"]=="2018"){
+				          if(d["MidPeriod"]=="2018"){
         					return d;
-				    }
-				)
+				          }
+	                              })
 	console.log(pop_data2018);
 	var canvas_width = 400, canvas_height = 400;
 	var svg = d3.select("#chart").append("svg")
