@@ -191,19 +191,28 @@ async function init(){
 	 //.attr("y", height/2+margin)
 	 //.text("Death Rate per thousand");
 	// Add X axis label:
-	svg.append("text")
+	svg.append("g").append("text")
 	    .attr("text-anchor", "end")
 	    .attr("x", width/2)
 	    .attr("y", height + margin + 20)
 	    .text("Birth Rate");
 
 	// Y axis label:
-	svg.append("text")
+	svg.append("g").append("text")
 	    .attr("text-anchor", "end")
 	    .attr("transform", "rotate(-90)")
 	    .attr("y", height/2+margin)
 	    .attr("x", margin/2)
-	    .text("Death Rate")
+	    .text("Death Rate");
+	
+	svg.append("g")
+	  .append("line")
+	  .attr("style", "stroke:black")
+	  .attr("x1", x(0))
+	  .attr("x2", x(20))
+	  .attr("y1", y(0))
+	  .attr("y2", y(20));
+	
 
 }
 
