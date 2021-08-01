@@ -205,11 +205,12 @@ async function init(){
 	     .append("text")
 	    .attr("text-anchor", "end")
 	    .attr("transform", "rotate(-90)")
-	    .attr("y", height)
 	    .attr("x", -20)
+	    .attr("y", height+margin)
 	    .text("Death Rate");
 	
-	svg.append("g")
+	g=svg.append("g")
+	g.attr("transform","translate("+margin+","+(height+margin)+")")
 	  .append("line")
 	  .attr("style", "stroke:black")
 	  .attr("x1", xScale(0))
