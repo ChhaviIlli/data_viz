@@ -159,10 +159,17 @@ async function init(){
 	            .attr("height", canvas_height );
 
 	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
-	var xScale=d3.scaleLinear().domain([0,60]).range([0,width]);
-	var yScale=d3.scaleLinear().domain([0,40]).range([height,0]);
-	var x_axis=d3.axisBottom(xScale).tickValues([10,20,30,40,50]).tickFormat(d3.format(".0f"));
-	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15,20,25]).tickFormat(d3.format(".0f"));;
+	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
+	var yScale=d3.scaleLinear().domain([0,20]).range([height,0]);
+	var x_axis=d3.axisBottom(xScale).tickValues([10,20,30,40]).tickFormat(d3.format(".0f")).append("text")
+			 .attr("x", width/2)
+			 .attr("y", height+(margin*1.5))
+			 .text("Birth Rate per thousand");
+	var y_axis=d3.axisLeft(yScale).tickValues([4,8,12,16]).tickFormat(d3.format(".0f")).append("text")
+			 .attr("x", margin/2)
+			 .attr("y", height/2+margin)
+			 .text("Death Rate per thousand");
+
 	var g = svg.append("g")
 		g.attr("transform","translate(50,50)")
 		  .selectAll('circle')
