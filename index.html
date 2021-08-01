@@ -177,8 +177,8 @@ async function init(){
 	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,20]).range([height,0]);
-	var x_axis=d3.axisBottom(xScale);
-	var y_axis=d3.axisLeft(yScale);
+	var x_axis=d3.axisBottom(xScale).tickValues([10,20,30,40]).tickFormat(d3.format(".0f"));
+	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15]).tickFormat(d3.format(".0f"));
 
 	var g = svg.append("g")
 		g.attr("transform","translate(50,50)")
@@ -189,22 +189,29 @@ async function init(){
 		   .attr("cy",function(d) {return yScale(d.CDR);})
 		   .attr("r",4);
 
+	svg.append('text')
+           .attr('x', -(height / 2) - margin)
+           .attr('y', margin / 2.4)
+           .attr('transform', 'rotate(-90)')
+           .attr('text-anchor', 'middle')
+           .text('Death Rate')
+
+	svg.append('text')
+	    .attr('x', width / 2 + margin)
+	    .attr('y', 40)
+	    .attr('text-anchor', 'middle')
+	    .text('Birth Rate')
 	var g = svg.append("g");
 	    g.attr("transform","translate(50,50)").call(y_axis);
-	    svg.append("g").append("text")
-	    .attr("text-anchor", "end")
-	    .attr("transform", "rotate(-90)")
-	    .attr("x", 10)
-	    .attr("y", height+margin)
-	    .text("Death Rate");
+	    
             
 	var g = svg.append("g");
 	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
-	   svg.append("g").append("text")
-	    .attr("text-anchor", "end")
-	    .attr("x", width/2+margin)
-	    .attr("y", 20+margin+height)
-	    .text("Birth Rate");
+	   //svg.append("g").append("text")
+	   // .attr("text-anchor", "middle")
+	   // .attr("x", width/2+margin)
+	   // .attr("y", 20+margin+height)
+	   // .text("Birth Rate");
 		
 	var g = svg.append("g");
 	g.attr("transform","translate("+margin+","+(height+margin)+")")
