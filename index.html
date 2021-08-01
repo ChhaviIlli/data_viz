@@ -9,33 +9,6 @@
 body {font-family: Verdana, sans-serif; margin:0}
 .mySlides {display: none}
 img {vertical-align: middle;}
-
-/* Tooltip container */
-.tooltip {
-  position: relative;
-  display: inline-block;
-  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
-}
-
-/* Tooltip text */
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  padding: 5px 0;
-  border-radius: 6px;
- 
-  /* Position the tooltip text - see examples below! */
-  position: absolute;
-  z-index: 1;
-}
-
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-}
 	
 /* Slideshow container */
 .slideshow-container {
@@ -198,6 +171,42 @@ async function init(){
 	var x_axis=d3.axisBottom(xScale).tickValues([10,20,30,40]).tickFormat(d3.format(".0f"));
 	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15]).tickFormat(d3.format(".0f"));
 
+	  // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
+	  // Its opacity is set to 0: we don't see it by default.
+	  var tooltip = d3.select("#my_dataviz")
+	    .append("div")
+	    .style("opacity", 0)
+	    .attr("class", "tooltip")
+	    .style("background-color", "white")
+	    .style("border", "solid")
+	    .style("border-width", "1px")
+	    .style("border-radius", "5px")
+	    .style("padding", "10px")
+
+
+
+	  // A function that change this tooltip when the user hover a point.
+	  // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+	  var mouseover = function(d) {
+	    tooltip
+	      .style("opacity", 1)
+	  }
+
+	  var mousemove = function(d) {
+	    tooltip
+	      .html(d.Location)
+	      .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+	      .style("top", (d3.mouse(this)[1]) + "px")
+	  }
+
+	  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+	  var mouseleave = function(d) {
+	    tooltip
+	      .transition()
+	      .duration(200)
+	      .style("opacity", 0)
+	  }
+
 	var g = svg.append("g")
 		g.attr("transform","translate(50,50)")
 		  .selectAll('circle')
@@ -205,7 +214,10 @@ async function init(){
 		  .enter().append("circle")
 		  .attr("cx",function(d) {return xScale(d.CBR);})
 		   .attr("cy",function(d) {return yScale(d.CDR);})
-		   .attr("r",4);
+		   .attr("r",4)
+	    	.on("mouseover", mouseover )
+    		.on("mousemove", mousemove )
+    		.on("mouseleave", mouseleave );
 
 	svg.append('text')
            .attr('x', -(height / 2) - margin)
