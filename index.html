@@ -10,13 +10,31 @@ body {font-family: Verdana, sans-serif; margin:0}
 .mySlides {display: none}
 img {vertical-align: middle;}
 
-#tooltip{
-	opacity: 0;
-	position:absolute;
-	text-align:center;
-	width: 60px; height: 40px;
-	background: white;
-	border: 0px;
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 	
 /* Slideshow container */
@@ -198,7 +216,7 @@ async function init(){
 
 	svg.append('text')
 	    .attr('x', width / 2 + margin)
-	    .attr('y', height+margin)
+	    .attr('y', height+margin+margin)
 	    .attr('text-anchor', 'middle')
 	    .text('Birth Rate');
 	var g = svg.append("g");
@@ -213,7 +231,8 @@ async function init(){
 	   // .attr("y", 20+margin+height)
 	   // .text("Birth Rate");
 		
-	var g = svg.append("g")
+	var g = svg.append("g");
+	  g.attr("transform","translate(50,50)")
 	  .append("line")
 	  .attr("style", "stroke:black")
 	  .attr("x2", xScale(0))
