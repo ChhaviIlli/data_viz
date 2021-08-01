@@ -10,6 +10,15 @@ body {font-family: Verdana, sans-serif; margin:0}
 .mySlides {display: none}
 img {vertical-align: middle;}
 
+#tooltip{
+	opacity: 0;
+	position:absolute;
+	text-align:center;
+	width: 60px; height: 40px;
+	background: white;
+	border: 0px;
+}
+	
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
@@ -118,8 +127,15 @@ img {vertical-align: middle;}
          </p>
      </div>
      <div id="chart" align="center"></div>
-  <div class="text">Caption Text</div>
-</div>
+     <div name="tooltip" opacity=0></div>
+	 selectAll("rect").data(d).enter().append("rect")
+	 .on("mouseover",function(d,i){
+	   tooltip.style("opacity",1)
+	    .style("left", (d3.event.pageX)+"px")
+		.style("top", (d3.event.pagey)+"px")
+		.html("item#"+i+" is "+d);
+	  <div class="text">Caption Text</div>
+	</div>
 
 <div class="mySlides fade">
   <div class="numbertext">2 / 3</div>
@@ -175,7 +191,7 @@ async function init(){
 
 	var g = svg.append("g");
 	    g.attr("transform","translate(50,50)").call(y_axis)
-	     .append("text")
+	    svg.append("g").append("text")
 	    .attr("text-anchor", "end")
 	    .attr("transform", "rotate(-90)")
 	    .attr("x", 20)
@@ -183,8 +199,8 @@ async function init(){
 	    .text("Death Rate");
             
 	var g = svg.append("g");
-	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis)
-	     .append("text")
+	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
+	   svg.append("g").append("text")
 	    .attr("text-anchor", "end")
 	    .attr("x", width/2)
 	    .attr("y", 20)
@@ -194,10 +210,10 @@ async function init(){
 	g.attr("transform","translate("+margin+","+(height+margin)+")")
 	  .append("line")
 	  .attr("style", "stroke:black")
-	  .attr("x1", xScale(0))
-	  .attr("x2", xScale(20))
-	  .attr("y1", yScale(0))
-	  .attr("y2", yScale(20));
+	  .attr("x2", xScale(0))
+	  .attr("x1", xScale(20))
+	  .attr("y2", yScale(0))
+	  .attr("y1", yScale(20));
 	
 	  color = d3.scaleSequential(d3.interpolateMagma).domain([0,0,1]);
    	
