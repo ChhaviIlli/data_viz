@@ -146,11 +146,13 @@ img {vertical-align: middle;}
 <script>
 async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
-	//const 2018_pop_data = pop_data.filter(function(d)){
-	//			    if(d["MidPeriod"]=="2018"){
-        //					return d;
-	//			    }
-	//			}
+	console.log(pop_data);
+	const pop_data2018 = pop_data.filter(function(d)){
+				    if(d["MidPeriod"]=="2018"){
+        					return d;
+				    }
+				}
+	console.log(pop_data2018);
 	var canvas_width = 400, canvas_height = 400;
 	var svg = d3.select("#chart").append("svg")
         	    .attr("width", canvas_width )
@@ -164,7 +166,7 @@ async function init(){
 	var g = svg.append("g")
 		g.attr("transform","translate(50,50)")
 		  .selectAll('circle')
-		  .data(data)
+		  .data(pop_data)
 		  .enter().append("circle")
 		  .attr("cx",function(d) {return xScale(d.CBR);})
 		   .attr("cy",function(d) {return yScale(d.CDR);})
