@@ -191,11 +191,13 @@ var year = "2008"
 async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	console.log(pop_data);
-	if(slideIndex==1) { year = "2008"}
-	else if(slideIndex==2) { year = "2018"}
-	else if(slideIndex==3) { year = "2021"}
-	else if(slideIndex > 3){year = "2021"}
-	else{year = "2008"}
+	if(slideIndex==1) { year = "2008";}
+	if(slideIndex==2) { 
+		console.log("year is 2018");
+		year = "2018";}
+	if(slideIndex==3) { year = "2021";}
+	if(slideIndex > 3){year = "2021";}
+	if(slideIndex < 1){year = "2008";}
 	
 	const data_preprocessing = pop_data.filter(function(d){
 				          if(d.CBR==0 && d.CDR==0){
