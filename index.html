@@ -194,10 +194,10 @@ function showSlides(n) {
   load_data();
 }
 
-var data_preprocessed = null;
+
 async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
-	data_preprocessed = pop_data.filter(function(d){
+	const data_preprocessed = pop_data.filter(function(d){
 				          if(d.CBR==0 && d.CDR==0){
 					  }
 		                          else{
@@ -205,7 +205,7 @@ async function init(){
 				          }
 	                              })
 	
-	init_helper();
+	init_helper(data_preprocessed);
 }
 
 	
@@ -251,6 +251,7 @@ function createScatterplot(pop_datayear ){
 			d3.select(this).attr('stroke', null);})	}
 	
 function createContour(pop_datayear){
+	var width = 300, height = 300;
 	var color = d3.scaleSequential(d3.interpolateTurbo).domain([0.000, 0.017]); 
 	  var contours = d3.contourDensity()
 	   .x(function(d,i){return xScale(d.CBR);})
@@ -273,6 +274,15 @@ function createContour(pop_datayear){
 	  .attr("d", d3.geoPath());}
 	
 function load_data(){
+	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
+	const data_preprocessed = pop_data.filter(function(d){
+				          if(d.CBR==0 && d.CDR==0){
+					  }
+		                          else{
+					      return d;
+				          }
+	                              })
+	
 	var year = "2008";
 	if(slideIndex==2){year="2018";}
 	const pop_datayear = data_preprocessed.filter(function(d){
@@ -289,7 +299,7 @@ function load_data(){
 	createScatterplot(pop_datayear);
 }
 					     
-function init_helper(){
+function init_helper(data_preprocessed){
 	//const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	//console.log(pop_data);
 	//console.log(slideIndex);
