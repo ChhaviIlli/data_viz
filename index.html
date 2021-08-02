@@ -104,12 +104,12 @@ img {vertical-align: middle;}
 }
 </style>
 </head>
-<body >
+<body onload="init()">
 
 <div class="slideshow-container">
 
 <div class="mySlides fade">
-  <div class="numbertext">1 / 3
+  <div class="numbertext">1 / 3</div>
      <div>
          <p>
                <h1>Birth rate vs death rate worldwide</h1>
@@ -118,12 +118,11 @@ img {vertical-align: middle;}
          </p>
      </div>
      <div id="chart" align="center"></div>
-     </div>
      <div class="text">Birth Rate vs Death Rate</div>
 </div>
 
 <div class="mySlides fade">
-  <div class="numbertext">2 / 3
+  <div class="numbertext">2 / 3</div>
     <div>
 	<p> 
 		<h1>Birth rate vs death rate worldwide</h1>
@@ -132,12 +131,11 @@ img {vertical-align: middle;}
 	</p>
     </div>
     <div id="chart1" align="center"></div>
-   </div>
   <div class="text">Caption Two</div>
 </div>
 
 <div class="mySlides fade">
-  <div class="numbertext">3 / 3
+  <div class="numbertext">3 / 3</div>
 	<div>
 	<p> 
 		<h1>Birth rate vs death rate worldwide</h1>
@@ -146,7 +144,6 @@ img {vertical-align: middle;}
 	</p>
     </div>
     <div id="chart2" align="center"></div>
-    </div>
   <div class="text">Caption Three</div>
 </div>
 
@@ -297,7 +294,7 @@ async function init(){
 	      .style("opacity", 0)
 	  }
 
-	var g = svg.append("g")
+	var g = d3.select("svg").append("g")
 		g.attr("transform","translate(50,50)")
 		  .selectAll('circle')
 		  .data(pop_data2018)
@@ -312,23 +309,23 @@ async function init(){
     		.on("mouseout", function(){
 			d3.select(this).attr('stroke', null);})
 
-	svg.append('text')
+	d3.select("svg").append('text')
            .attr('x', -(height / 2) - margin)
            .attr('y', margin / 2.4)
            .attr('transform', 'rotate(-90)')
            .attr('text-anchor', 'middle')
            .text('Death Rate');
 
-	svg.append('text')
+	d3.select("svg").append('text')
 	    .attr('x', width / 2 + margin)
 	    .attr('y', height+margin+margin)
 	    .attr('text-anchor', 'middle')
 	    .text('Birth Rate');
-	var g = svg.append("g");
+	var g = d3.select("svg").append("g");
 	    g.attr("transform","translate(50,50)").call(y_axis);
 	    
             
-	var g = svg.append("g");
+	var g = d3.select("svg").append("g");
 	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
 	   //svg.append("g").append("text")
 	   // .attr("text-anchor", "middle")
@@ -336,7 +333,7 @@ async function init(){
 	   // .attr("y", 20+margin+height)
 	   // .text("Birth Rate");
 		
-	var g = svg.append("g");
+	var g = d3.select("svg").append("g");
 	  g.attr("transform","translate(50,50)")
 	  .append("line")
 	  .attr("style", "stroke:black")
@@ -344,9 +341,6 @@ async function init(){
 	  .attr("x1", xScale(20))
 	  .attr("y2", yScale(0))
 	  .attr("y1", yScale(20));
-       
-	
-
 }
 </script>
 
