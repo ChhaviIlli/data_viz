@@ -374,6 +374,9 @@ function tooltip_available(){
       		.on("mouseover", function(){
           	d3.select(this)
             	.style("background-color", "orange");})
+	      	.on("mouseout", function(){
+          	d3.select(this)
+            	.style("background-color", "white");})
 }
 function load_data(){
 	if(slideIndex==1){
