@@ -209,7 +209,7 @@ async function init(){
 		   .attr("cy",function(d) {return yScale(d.CDR);})
 		   .attr("r",4)
 	           .append("title")
-	           .text(d => d.Location)
+	           .text(d => d.CBR)
 	    	.on("mouseover", function(){
 			d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
     		.on("mouseout", function(){
