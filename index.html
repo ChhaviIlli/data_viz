@@ -250,14 +250,14 @@ async function init(){
 	
 	  console.log("reached");
 	var color = d3.scaleSequential(d3.interpolateYlGnBu)
-    			.domain([0, 1.8]); // Points per square pixel.
+    			.domain([0, 200]); // Points per square pixel.
 	 d3.select("svg")
 	  .attr("transform", "translate(50,50)")
 	  .selectAll("path")
 	  .data(d3.contourDensity()
         	.x(function(d) { return xScale(d.CBR); })
         	.y(function(d) { return yScale(d.CDR); })
-        	.size([width, height])
+        	.size([width+50, height+50])
         	.bandwidth(10)
                 (pop_data2018))
 	  .enter()
