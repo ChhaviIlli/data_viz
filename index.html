@@ -384,29 +384,9 @@ function tooltip_available(){
 	        .append("title")
 	           .text(year)
 	    	.on("mouseover", function(){
-			d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
+			d3.select(this).attr('stroke', 'black').attr('stroke-width',1).style("background-color", "orange");})
     		.on("mouseout", function(){
-			d3.select(this).attr('stroke', null);})	}
-	
-      		.on("mouseover", function(){
-          	d3.select(this)
-            	.style("background-color", "orange");})
-	      	.on("mouseout", function(){
-          	d3.select(this)
-            	.style("background-color", "white");})
-	 
-	 var mousenter = function(d) {
-	    tooltip.style("opacity", 1) }
-	 
-	  var mousemove = function(d) {
-	    tooltip.html(d.Location)
-	      .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-	      .style("top", (d3.mouse(this)[1]) + "px") }
-
-	  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
-	  var mouseleave = function(d) {
-	    tooltip.transition().duration(200).style("opacity", 0)
-	  }
+			d3.select(this).attr('stroke', null).style("background-color", "white");})	 
 }
 function load_data(){
 	if(slideIndex==1){
