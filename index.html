@@ -118,8 +118,7 @@ img {vertical-align: middle;}
          </p>
      </div>
      <div id="chart" align="center"></div>
-     <div class="text">Birth Rate vs Death Rate</div>
-</div>
+   </div>
 
 <div class="mySlides fade">
   <div class="numbertext">2 / 3</div>
@@ -249,8 +248,7 @@ async function init(){
 	  .attr("y1", yScale(20));
 	
 	  console.log("reached");
-	var color = d3.scaleSequential(d3.interpolateYlGnBu)
-    			.domain([0, 200]); // Points per square pixel.
+	var color = d3.scaleSequential().domain([0, 200]).range(d3.interpolateYlGnBu); // Points per square pixel.
 	 d3.select("svg")
 	  .attr("transform", "translate(50,50)")
 	  .selectAll("path")
@@ -264,7 +262,7 @@ async function init(){
 	  .append("path")
 	  .attr("class", "contour")
 	  .attr("stroke","none")
-	  .attr("fill", function(d) { return color(d.value); })
+	  .attr("fill", function(d) { return color(d); })
 	  .attr("d", d3.geoPath());
 }
 
