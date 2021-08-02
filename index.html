@@ -254,7 +254,7 @@ async function init(){
 	 .size([width+margin,height+margin])
 	.bandwidth(20);
 
-	  color = d3.scaleSequential(d3.extent(contours(pop_data2018)), d3.interpolateInferno));
+	  color = d3.scaleSequential(d3.extent(contours(pop_data2018), d3.interpolateInferno));
 	  
 	 d3.select("svg")
 	  .selectAll("path")
