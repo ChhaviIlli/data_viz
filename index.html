@@ -141,7 +141,7 @@ img {vertical-align: middle;}
 	<div>
 	<p> 
 		<h1>Birth rate vs death rate worldwide</h1>
-                This scene shows the birth rate and death rate (per 1000 people) across countries in the world in <b> across ~20 years transition period(2000-2018) </b>, it shows guide to capture 0 population growth mark.<br/>
+                This scene shows the birth rate and death rate (per 1000 people) across countries in the world in across 20 years transition period </b>(1998-2018) </b>, it shows guide to capture 0 population growth mark.<br/>
                 <i>Data is taken from WDI.</i><br/>
 	</p>
     </div>
@@ -391,6 +391,18 @@ function update_axis(){
 	    .attr('y', height+margin+margin)
 	    .attr('text-anchor', 'middle')
 	    .text('Birth Rate');
+	
+	var year = "2008"
+	if(slideIndex==1){year = "2008";}
+	else if(slideIndex==2){year = "2018";}
+	else{year = "1998-2018";}
+	
+	d3.select("#chart").select("svg").append('text')
+	    .attr('x', width / 2 + margin)
+	    .attr('y', margin)
+	    .attr('text-anchor', 'middle')
+	    .text('Year:' year);
+	
 	var g = d3.select("#chart").select("svg").append("g");
 	    g.attr("transform","translate(50,50)").call(y_axis);
 	    
