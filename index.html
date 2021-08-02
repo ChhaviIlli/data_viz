@@ -198,8 +198,10 @@ async function init(){
 	else{year = "2008"}
 	
 	const data_preprocessing = pop_data.filter(function(d){
-				          if(d["Location"]!="Wallis and Futuna Islands"){
-        					return d;
+				          if(d.CBR==0 && d.CDR==0){
+					  }
+		                          else{
+					      return d;
 				          }
 	                              })
 	const pop_data2018 = data_preprocessing.filter(function(d){
@@ -214,6 +216,7 @@ async function init(){
 	   svg = d3.select("#chart").append("svg");
 	}
 	else if(year == "2018"){
+	   console.log("chart1");
            svg = d3.select("#chart1").append("svg");
 	}
 	else{
