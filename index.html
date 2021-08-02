@@ -220,6 +220,7 @@ async function init(){
 
 	
 function createScatterplot(pop_datayear ){
+	var width=50, height=50;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
 	  var tooltip = d3.select("#my_dataviz")
@@ -250,6 +251,11 @@ function createScatterplot(pop_datayear ){
 	var g = d3.select("#chart").select("svg").append("g");
 		g.attr("transform","translate(50,50)")
 		  .selectAll('circle')
+	          .exit().remove();
+	 
+	var g = d3.select("#chart").select("svg").append("g");
+		g.attr("transform","translate(50,50)")
+		  .selectAll('circle')
 		  .data(pop_datayear)
 		  .enter().append("circle")
 		  .attr("cx",function(d) {return xScale(d.CBR);})
@@ -274,6 +280,12 @@ function createContour(pop_datayear){
 	.bandwidth(20)
 	  (pop_datayear);
 	console.log(contours);
+	
+	var g  = d3.select("#chart").select("svg").append("g");
+	   g.attr("transform","translate(50,50)")
+	  .selectAll("path")
+	  .exit().remove();
+	
 	 var g  = d3.select("#chart").select("svg").append("g");
 	   g.attr("transform","translate(50,50)")
 	  .selectAll("path")
