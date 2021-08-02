@@ -254,7 +254,7 @@ async function init(){
 	 .size([width+margin,height+margin])
 	.bandwidth(20);
 
-	 contours_data = contours(pop_data(2018));
+	 contours_data = contours(pop_data_2018);
 	  var color = d3.scaleSequential().domain(d3.extent(contours_data)).range(d3.interpolateInferno);
 	  
 	 d3.select("svg")
