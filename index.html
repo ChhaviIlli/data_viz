@@ -283,7 +283,6 @@ function updateContour(pop_datayear){
 	 .size([width,height])
 	.bandwidth(20)
 	  (pop_datayear);
-	console.log(contours);
 	
 	var path = d3.select("#chart").select("svg").selectAll("path")
                         .data(contours);	
@@ -312,12 +311,7 @@ function updateContour(pop_datayear){
 	 .size([width,height])
 	.bandwidth(20)
 	  (pop_datayear);
-	console.log(contours);
 	
-	var g  = d3.select("#chart").select("svg").append("g");
-	   g.attr("transform","translate(50,50)")
-	  .selectAll("path")
-	  .exit().remove();
 	
 	 var g  = d3.select("#chart").select("svg").append("g");
 	   g.attr("transform","translate(50,50)")
@@ -332,7 +326,47 @@ function updateContour(pop_datayear){
 	  .attr("fill-opacity", 0.10)
 	  .attr("d", d3.geoPath());}
 
-function load_data(){	
+function load_data(){
+	var canvas_width = 400, canvas_height = 400;
+	var svg = d3.select(chart).select("svg")
+        
+	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
+	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
+	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
+	var x_axis=d3.axisBottom(xScale).tickValues([10,20,30,40]).tickFormat(d3.format(".0f"));
+	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15,20]).tickFormat(d3.format(".0f"));
+
+	  // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
+	  // Its opacity is set to 0: we don't see it by default.
+	
+	d3.select("svg").append('text')
+           .attr('x', -(height / 2) - margin)
+           .attr('y', margin / 2.4)
+           .attr('transform', 'rotate(-90)')
+           .attr('text-anchor', 'middle')
+           .text('Death Rate');
+
+	d3.select("svg").append('text')
+	    .attr('x', width / 2 + margin)
+	    .attr('y', height+margin+margin)
+	    .attr('text-anchor', 'middle')
+	    .text('Birth Rate');
+	var g = d3.select("svg").append("g");
+	    g.attr("transform","translate(50,50)").call(y_axis);
+	    
+  
+	var g = d3.select("svg").append("g");
+	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
+	   
+		
+	var g = d3.select("svg").append("g");
+	  g.attr("transform","translate(50,50)")
+	  .append("line")
+	  .attr("style", "stroke:black")
+	  .attr("x2", xScale(0))
+	  .attr("x1", xScale(20))
+	  .attr("y2", yScale(0))
+	  .attr("y1", yScale(20));
 	if(slideIndex==1){
 		updateContour(data_preprocessed_2008);
 		updateScatterplot(data_preprocessed_2008);
