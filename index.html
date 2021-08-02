@@ -256,6 +256,20 @@ function updateScatterplot(pop_datayear, speed){
                         .attr("cy",function(d){return yScale(d.CDR);})
                         .attr("r",4);
 	}
+		var year = "2008"
+	if(slideIndex==1){year = "2008";}
+	else if(slideIndex==2){year = "2018";}
+	else{year = "1998-2018";}
+	
+}
+
+// Add annotation to the chart
+const makeAnnotations = d3.annotation()
+  .annotations(annotations)
+d3.select("#example4")
+  .append("g")
+  .call(makeAnnotations)
+	
 }
 function createScatterplot(pop_datayear ){
 	var width=300, height=300;
@@ -286,6 +300,7 @@ function createScatterplot(pop_datayear ){
 	    tooltip.transition().duration(200).style("opacity", 0)
 	  }
 	 
+	
 	var g = d3.select("#chart").select("svg").append("g");
 		g.attr("transform","translate(50,50)")
 		  .selectAll('circle')
@@ -393,17 +408,6 @@ function update_axis(){
 	    .attr('text-anchor', 'middle')
 	    .text('Birth Rate');
 	
-	var year = "2008"
-	if(slideIndex==1){year = "2008";}
-	else if(slideIndex==2){year = "2018";}
-	else{year = "1998-2018";}
-	
-	d3.select("#chart").select("svg").append('text')
-	    .attr('x', width / 2 + margin)
-	    .attr('y', margin)
-	    .attr('text-anchor', 'middle')
-	    .text(year);
-	
 	var g = d3.select("#chart").select("svg").append("g");
 	    g.attr("transform","translate(50,50)").call(y_axis);
 	    
@@ -411,7 +415,24 @@ function update_axis(){
 	var g = d3.select("#chart").select("svg").append("g");
 	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
 	   
-		
+	const annotations = [
+	  {
+	    note: {
+	      label: "Zero Population growth",
+	      title: "Zero Population growth "
+	    },
+	    type: d3.annotationCalloutCircle,
+	    subject: {
+	      radius: 20,         // circle radius
+	      radiusPadding: 20   // white space around circle befor connector
+	    },
+	    color: ["red"],
+	    x: xScale(25),
+	    y:  yScale(25),
+	    dy: 70,
+	    dx: 70
+	  }
+	]
 	var g = d3.select("#chart").select("svg").append("g");
 	  g.attr("transform","translate(50,50)")
 	  .append("line")
@@ -420,7 +441,8 @@ function update_axis(){
 	  .attr("x1", xScale(25))
 	  .attr("y2", yScale(0))
 	  .attr("y1", yScale(25))
-	  .attr("stroke-width", 3);
+	  .attr("stroke-width", 3)
+	  .call(makeAnnotations);
 }
 function tooltip_available(){
 	  d3.select("#chart").select("svg")
