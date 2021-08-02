@@ -420,6 +420,9 @@ function update_axis(){
 	    dx: 70
 	  }
 	]
+	
+	const makeAnnotations = d3.annotation()
+  	.annotations(annotations)
 	var g = d3.select("#chart").select("svg").append("g");
 	  g.attr("transform","translate(50,50)")
 	  .append("line")
