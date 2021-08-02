@@ -189,7 +189,12 @@ async function init(){
 	else if(slideIndex > 3){year = "2021"}
 	else{year = "2008"}
 	
-	const pop_data2018 = pop_data.filter(function(d){
+	const data_preprocessing = pop_data.filter(function(d){
+				          if(d["Location"]!="Wallis and Futuna Islands"){
+        					return d;
+				          }
+	                              })
+	const pop_data2018 = data_preprocessing.filter(function(d){
 				          if(d["MidPeriod"]==year){
         					return d;
 				          }
