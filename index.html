@@ -244,7 +244,7 @@ function updateScatterplot(pop_datayear, speed){
 	//update all circles to new positions
 	if(speed == "fast"){
          circle.transition()
-                        .duration(500)
+                        .duration(10)
                         .attr("cx",function(d){return xScale(d.CBR);})
                         .attr("cy",function(d){return yScale(d.CDR);})
                         .attr("r",4);	}
@@ -320,7 +320,7 @@ function updateContour(pop_datayear, speed){
 	//update all paths to new positions
 	 if (speed == "fast"){
 		 path.transition()
-				.duration(500)
+				.duration(10)
 				.attr("class", "contour")
 				.attr("stroke","green")
 				.attr("stroke-opacity", 0)
@@ -420,12 +420,12 @@ function tooltip_available(){
 }
 function load_data(){
 	if(slideIndex==1){
-		updateContour(data_preprocessed_2008);
-		updateScatterplot(data_preprocessed_2008);
+		updateContour(data_preprocessed_2008, "fast");
+		updateScatterplot(data_preprocessed_2008, "fast");
 	}
 	else if(slideIndex == 2){
-	        updateContour(data_preprocessed_2018);
-		updateScatterplot(data_preprocessed_2018);
+	        updateContour(data_preprocessed_2018, "fast");
+		updateScatterplot(data_preprocessed_2018, "fast");
 	}
 	else{
 	     updateContour(data_preprocessed_1998, "fast");
