@@ -340,7 +340,7 @@ function updateContour(pop_datayear){
 
 function load_data(){
 	var canvas_width = 400, canvas_height = 400;
-	var svg = d3.select(chart).append("svg")
+	var svg = d3.select(chart).select("svg")
         	    .attr("width", canvas_width )
 	            .attr("height", canvas_height );
 
