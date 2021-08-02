@@ -194,19 +194,18 @@ function showSlides(n) {
   load_data();
 }
 
+var data_preprocessed = null;
 async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
-	const data_preprocessed = pop_data.filter(function(d){
+	data_preprocessed = pop_data.filter(function(d){
 				          if(d.CBR==0 && d.CDR==0){
 					  }
 		                          else{
 					      return d;
 				          }
 	                              })
-	if(slideIndex==1){
-	   init_helper(data_preprocessed, "2008", "#chart");}
-	else{
-	   init_helper(data_preprocessed, "2018", "#chart1");}
+	
+	init_helper();}
 }
 
 	
@@ -274,9 +273,9 @@ function createContour(pop_datayear){
 	  .attr("d", d3.geoPath());}
 	
 function load_data(){
-	if(slideIndex==1){var year = "2008";}
-	if(slideIndex==2)(var year="2016";}
-	const pop_datayear = pop_data.filter(function(d){
+	var year = "2008";
+	if(slideIndex==2)(year="2018";}
+	const pop_datayear = data_preprocessed.filter(function(d){
 				          if(d["MidPeriod"]==year){
         					return d;
 				          }
@@ -290,7 +289,7 @@ function load_data(){
 	createScatterplot(pop_datayear);
 }
 					     
-function init_helper(pop_data, year, chart){
+function init_helper(){
 	//const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	//console.log(pop_data);
 	//console.log(slideIndex);
@@ -309,7 +308,9 @@ function init_helper(pop_data, year, chart){
 	//				      return d;
 	//			          }
 	//                              })
-	const pop_data2018 = pop_data.filter(function(d){
+	var year = "2008";
+	if(slideIndex==2)(year="2008";}
+	const pop_datayear = data_preprocessed.filter(function(d){
 				          if(d["MidPeriod"]==year){
         					return d;
 				          }
@@ -327,8 +328,8 @@ function init_helper(pop_data, year, chart){
 	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15,20]).tickFormat(d3.format(".0f"));
 
 	
-	createContour(pop_data2018);
-	createScatterplot(pop_data2018 );
+	createContour(pop_datayear);
+	createScatterplot(pop_datayear );
 	  // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
 	  // Its opacity is set to 0: we don't see it by default.
 	
