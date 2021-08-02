@@ -218,7 +218,55 @@ async function init(){
 	init_helper();
 }
 
+function updateScatterplot(pop_datayear){
 	
+	var width=50, height=50;
+	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
+	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
+	  var tooltip = d3.select("#my_dataviz")
+	    .append("div")
+	    .style("opacity", 0.5)
+	    .attr("class", "tooltip")
+	    .style("background-color", "white")
+	    .style("border", "solid")
+	    .style("border-width", "1px")
+	    .style("border-radius", "5px")
+	    .style("padding", "10px")
+
+	  // A function that change this tooltip when the user hover a point.
+	  // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+	  var mouseover = function(d) {
+	    tooltip.style("opacity", 1) }
+
+	  var mousemove = function(d) {
+	    tooltip.html(d.Location)
+	      .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+	      .style("top", (d3.mouse(this)[1]) + "px") }
+
+	  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+	  var mouseleave = function(d) {
+	    tooltip.transition().duration(200).style("opacity", 0)
+	  }
+	var circle = d3.select("#chart").select("svg").select("g").selectAll("circle")
+                        .data(pop_datayear);	
+	circle.exit().remove();//remove unneeded circles
+        circle.enter().append("circle")
+                        .attr("r",0);//create any new circles needed
+	//update all circles to new positions
+         circle.transition()
+                        .duration(500)
+                        .attr("cx",function(d){return d.CBR;})
+                        .attr("cy",function(d){return d.CDR;})
+                        .attr("r",4)
+			.append("title")
+	           	.text(d => d.Location)
+	    		.on("mouseover", function(){
+				d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
+    			.on("mouseout", function(){
+				d3.select(this).attr('stroke', null);})	
+	
+	
+}
 function createScatterplot(pop_datayear ){
 	var width=50, height=50;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
@@ -247,11 +295,6 @@ function createScatterplot(pop_datayear ){
 	  var mouseleave = function(d) {
 	    tooltip.transition().duration(200).style("opacity", 0)
 	  }
-
-	var g = d3.select("#chart").select("svg").append("g");
-		g.attr("transform","translate(50,50)")
-		  .selectAll('circle')
-	          .exit().remove();
 	 
 	var g = d3.select("#chart").select("svg").append("g");
 		g.attr("transform","translate(50,50)")
@@ -303,11 +346,11 @@ function load_data(){
 	
 	if(slideIndex==1){
 		createContour(data_preprocessed_2008);
-		createScatterplot(data_preprocessed_2008);
+		updateScatterplot(data_preprocessed_2008);
 	}
 	else if(slideIndex == 2){
 	        createContour(data_preprocessed_2018);
-		createScatterplot(data_preprocessed_2018);
+		updateScatterplot(data_preprocessed_2018);
 	}
 	else{
 		
