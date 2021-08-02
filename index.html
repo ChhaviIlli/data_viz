@@ -171,7 +171,7 @@ function showSlides(n) {
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
 }
-	
+var year = "2008"
 async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	console.log(pop_data);
@@ -182,7 +182,7 @@ async function init(){
 	else{year = "2008"}
 	
 	const pop_data2018 = pop_data.filter(function(d){
-				          if(d["MidPeriod"]=="2018"){
+				          if(d["MidPeriod"]==year){
         					return d;
 				          }
 	                              })
