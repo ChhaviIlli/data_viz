@@ -256,7 +256,7 @@ async function init(){
 	  .selectAll("path")
 	  .data(d3.contourDensity()
         	.x(function(d) { return xScale(d.CBR); })
-        	.y(function(d) { return ySale(d.CDR); })
+        	.y(function(d) { return yScale(d.CDR); })
         	.size([width, height])
         	.bandwidth(10)
                 (pop_data2018))
