@@ -25,7 +25,7 @@ img {vertical-align: middle;}
   width: auto;
   padding: 16px;
   margin-top: -22px;
-  color: black;
+  color: white;
   font-weight: bold;
   font-size: 12px;
   transition: 0.6s ease;
@@ -42,7 +42,6 @@ img {vertical-align: middle;}
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
   background-color: black;/*rgba(0,0,0,0.8);*/
-  color: white;
 }
 
 /* Caption text */
@@ -371,42 +370,13 @@ function update_axis(){
 	  .attr("stroke-width", 3);
 }
 function tooltip_available(){
-	  var year = 2008;
-	  if(slideIndex==1){
-		  year = "2008";
-	  }else if(slideIndex ==2){
-		  year = "2018";
-	  }else{
-		  year = "2000 to 2018"
-	  }
-		  
 	  d3.select("#chart").select("svg")
-	        .append("title")
-	           .text(year)
-	    	.on("mouseover", function(){
-			d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
-    		.on("mouseout", function(){
-			d3.select(this).attr('stroke', null);})	}
-	
       		.on("mouseover", function(){
           	d3.select(this)
             	.style("background-color", "orange");})
 	      	.on("mouseout", function(){
           	d3.select(this)
             	.style("background-color", "white");})
-	 
-	 var mousenter = function(d) {
-	    tooltip.style("opacity", 1) }
-	 
-	  var mousemove = function(d) {
-	    tooltip.html(d.Location)
-	      .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-	      .style("top", (d3.mouse(this)[1]) + "px") }
-
-	  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
-	  var mouseleave = function(d) {
-	    tooltip.transition().duration(200).style("opacity", 0)
-	  }
 }
 function load_data(){
 	if(slideIndex==1){
