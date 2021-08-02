@@ -41,7 +41,7 @@ img {vertical-align: middle;}
 
 /* On hover, add a black background color with a little bit see-through */
 .prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+  background-color: black;/*rgba(0,0,0,0.8);*/
 }
 
 /* Caption text */
@@ -117,7 +117,6 @@ img {vertical-align: middle;}
                 <i>Data is taken from WDI.</i><br/>
          </p>
      </div>
-     <div id="chart" align="center"></div>
      <div class="text">Birth Rate vs Death Rate</div>
      
 </div>
@@ -131,7 +130,6 @@ img {vertical-align: middle;}
                 <i>Data is taken from WDI.</i><br/>
 	</p>
     </div>
-    <div id="chart1" align="center"></div>
     <div class="text">Caption Two</div>
    
 </div>
@@ -145,11 +143,9 @@ img {vertical-align: middle;}
                 <i>Data is taken from WDI.</i><br/>
 	</p>
     </div>
-    <div id="chart2" align="center"></div>
   <div class="text">Caption Three</div>
-  
 </div>
-
+<div id="chart" align="center"></div>
 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
 <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
@@ -193,10 +189,11 @@ function showSlides(n) {
   d3.select(chart).selectAll('*').remove();
   var chart = document.getElementById("#chart2");
   d3.select(chart).selectAll('*').remove();
-  init();
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
+  load_data();
 }
+
 async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	const data_preprocessed = pop_data.filter(function(d){
@@ -211,7 +208,88 @@ async function init(){
 	else{
 	   init_helper(data_preprocessed, "2018", "#chart1");}
 }
+
 	
+function createScatterplot(pop_datayear ){
+	  var tooltip = d3.select("#my_dataviz")
+	    .append("div")
+	    .style("opacity", 0.5)
+	    .attr("class", "tooltip")
+	    .style("background-color", "white")
+	    .style("border", "solid")
+	    .style("border-width", "1px")
+	    .style("border-radius", "5px")
+	    .style("padding", "10px")
+
+	  // A function that change this tooltip when the user hover a point.
+	  // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
+	  var mouseover = function(d) {
+	    tooltip.style("opacity", 1) }
+
+	  var mousemove = function(d) {
+	    tooltip.html(d.Location)
+	      .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
+	      .style("top", (d3.mouse(this)[1]) + "px") }
+
+	  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+	  var mouseleave = function(d) {
+	    tooltip.transition().duration(200).style("opacity", 0)
+	  }
+
+	var g = d3.select("#chart").select("svg").append("g");
+		g.attr("transform","translate(50,50)")
+		  .selectAll('circle')
+		  .data(pop_datayear)
+		  .enter().append("circle")
+		  .attr("cx",function(d) {return xScale(d.CBR);})
+		   .attr("cy",function(d) {return yScale(d.CDR);})
+		   .attr("r",4)
+	           .append("title")
+	           .text(d => d.Location)
+	    	.on("mouseover", function(){
+			d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
+    		.on("mouseout", function(){
+			d3.select(this).attr('stroke', null);})	}
+	
+function createContour(pop_datayear){
+	var color = d3.scaleSequential(d3.interpolateTurbo).domain([0.000, 0.017]); 
+	  var contours = d3.contourDensity()
+	   .x(function(d,i){return xScale(d.CBR);})
+	  .y(function(d,i){return yScale(d.CDR);})
+	 .size([width,height])
+	.bandwidth(20)
+	  (pop_datayear);
+	console.log(contours);
+	 var g  = d3.select("#chart").select("svg").append("g");
+	   g.attr("transform","translate(50,50)")
+	  .selectAll("path")
+	  .data(contours)
+	  .enter()
+	  .append("path")
+	  .attr("class", "contour")
+	  .attr("stroke","green")
+	  .attr("stroke-opacity", 0.5)
+	  .attr("fill",  function(d){return color(d.value);})
+	  .attr("fill-opacity", 0.10)
+	  .attr("d", d3.geoPath());}
+	
+function load_data(){
+	if(slideIndex==1){var year = "2008";}
+	if(slideIndex==2)(var year="2016";}
+	const pop_datayear = pop_data.filter(function(d){
+				          if(d["MidPeriod"]==year){
+        					return d;
+				          }
+	var cicles = d3.select("#chart').select("svg")
+	            .selectAll("circle");
+	    circles.exit().remove();
+	var paths = d3.select(chart).select("svg")
+	            .selectAll("path");
+	    paths.exit().remove();
+	createContour(pop_datayear);
+	createScatterplot(pop_datayear);
+}
+					     
 function init_helper(pop_data, year, chart){
 	//const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	//console.log(pop_data);
@@ -236,7 +314,7 @@ function init_helper(pop_data, year, chart){
         					return d;
 				          }
 	                              })
-	console.log(pop_data2018);
+	//console.log(pop_data2018);
 	var canvas_width = 400, canvas_height = 400;
 	var svg = d3.select(chart).append("svg")
         	    .attr("width", canvas_width )
@@ -244,84 +322,16 @@ function init_helper(pop_data, year, chart){
 
 	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
-	var yScale=d3.scaleLinear().domain([0,20]).range([height,0]);
+	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
 	var x_axis=d3.axisBottom(xScale).tickValues([10,20,30,40]).tickFormat(d3.format(".0f"));
-	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15]).tickFormat(d3.format(".0f"));
+	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15,20]).tickFormat(d3.format(".0f"));
 
 	
-	var color = d3.scaleSequential(d3.interpolateTurbo).domain([0.000, 0.017]); 
-	  var contours = d3.contourDensity()
-	   .x(function(d,i){return xScale(d.CBR);})
-	  .y(function(d,i){return yScale(d.CDR);})
-	 .size([width,height])
-	.bandwidth(20)
-	  (pop_data2018);
-	console.log(contours);
-	 var g  = d3.select("svg").append("g");
-	   g.attr("transform","translate(50,50)")
-	  .selectAll("path")
-	  .data(contours)
-	  .enter()
-	  .append("path")
-	  .attr("class", "contour")
-	  .attr("stroke","green")
-	  .attr("stroke-opacity", 0.5)
-	  .attr("fill",  function(d){return color(d.value);})
-	  .attr("fill-opacity", 0.10)
-	  .attr("d", d3.geoPath());
-	
-
+	createContour(pop_data2018);
+	createScatterplot(pop_data2018 );
 	  // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
 	  // Its opacity is set to 0: we don't see it by default.
-	  var tooltip = d3.select("#my_dataviz")
-	    .append("div")
-	    .style("opacity", 0.5)
-	    .attr("class", "tooltip")
-	    .style("background-color", "white")
-	    .style("border", "solid")
-	    .style("border-width", "1px")
-	    .style("border-radius", "5px")
-	    .style("padding", "10px")
-
-
-
-	  // A function that change this tooltip when the user hover a point.
-	  // Its opacity is set to 1: we can now see it. Plus it set the text and position of tooltip depending on the datapoint (d)
-	  var mouseover = function(d) {
-	    tooltip
-	      .style("opacity", 1)
-	  }
-
-	  var mousemove = function(d) {
-	    tooltip
-	      .html(d.Location)
-	      .style("left", (d3.mouse(this)[0]+90) + "px") // It is important to put the +90: other wise the tooltip is exactly where the point is an it creates a weird effect
-	      .style("top", (d3.mouse(this)[1]) + "px")
-	  }
-
-	  // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
-	  var mouseleave = function(d) {
-	    tooltip
-	      .transition()
-	      .duration(200)
-	      .style("opacity", 0)
-	  }
-
-	var g = d3.select("svg").append("g")
-		g.attr("transform","translate(50,50)")
-		  .selectAll('circle')
-		  .data(pop_data2018)
-		  .enter().append("circle")
-		  .attr("cx",function(d) {return xScale(d.CBR);})
-		   .attr("cy",function(d) {return yScale(d.CDR);})
-		   .attr("r",4)
-	           .append("title")
-	           .text(d => d.Location)
-	    	.on("mouseover", function(){
-			d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
-    		.on("mouseout", function(){
-			d3.select(this).attr('stroke', null);})
-
+	
 	d3.select("svg").append('text')
            .attr('x', -(height / 2) - margin)
            .attr('y', margin / 2.4)
@@ -337,14 +347,10 @@ function init_helper(pop_data, year, chart){
 	var g = d3.select("svg").append("g");
 	    g.attr("transform","translate(50,50)").call(y_axis);
 	    
-            
+  
 	var g = d3.select("svg").append("g");
 	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
-	   //svg.append("g").append("text")
-	   // .attr("text-anchor", "middle")
-	   // .attr("x", width/2+margin)
-	   // .attr("y", 20+margin+height)
-	   // .text("Birth Rate");
+	   
 		
 	var g = d3.select("svg").append("g");
 	  g.attr("transform","translate(50,50)")
