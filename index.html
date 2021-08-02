@@ -223,10 +223,10 @@ async function init(){
 	      .style("opacity", 0)
 	  }
 
-	var g = svg.append("g")
-	        .append("title")
+	var g = svg.append("g");
+	        g.append("title")
 	        .text("...")
-	.on("mouseover", function(){
+	       .on("mouseover", function(){
 			d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
     		.on("mouseout", function(){
 			d3.select(this).attr('stroke', null);})
