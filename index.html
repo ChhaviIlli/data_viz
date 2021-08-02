@@ -278,7 +278,7 @@ function load_data(){
 	const pop_datayear = data_preprocessed.filter(function(d){
 				          if(d["MidPeriod"]==year){
         					return d;
-				          }
+				          }})
 	var circles = d3.select("#chart").select("svg")
 	            .selectAll("circle");
 	    circles.exit().remove();
