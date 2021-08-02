@@ -224,9 +224,9 @@ function updateScatterplot(pop_datayear){
 	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
 	var circle = d3.select("#chart").select("svg").select("g").selectAll("circle")
                         .data(pop_datayear);	
-	//circle.exit().remove();//remove unneeded circles
-        //circle.enter().append("circle")
-          //              .attr("r",0);//create any new circles needed
+	circle.exit().remove();//remove unneeded circles
+        circle.enter().append("circle")
+                        .attr("r",0);//create any new circles needed
 	//update all circles to new positions
          circle.transition()
                         .duration(500)
@@ -270,7 +270,7 @@ function createScatterplot(pop_datayear ){
 		  .enter().append("circle")
 		  .attr("cx",function(d) {return xScale(d.CBR);})
 		   .attr("cy",function(d) {return yScale(d.CDR);})
-		   .attr("r",4)
+		   .attr("r",0)
 	           .append("title")
 	           .text(d => d.Location)
 	    	.on("mouseover", function(){
@@ -333,9 +333,9 @@ function updateContour(pop_datayear){
 	  .append("path")
 	  .attr("class", "contour")
 	  .attr("stroke","green")
-	  .attr("stroke-opacity", 0.5)
+	  .attr("stroke-opacity", 0)
 	  .attr("fill",  function(d){return color(d.value);})
-	  .attr("fill-opacity", 0.10)
+	  .attr("fill-opacity", 0)
 	  .attr("d", d3.geoPath());}
 
 function load_data(){
