@@ -129,6 +129,7 @@ img {vertical-align: middle;}
 	<p> 
 		<h1>Birth rate vs death rate worldwide</h1>
                 This scene shows the birth rate and death rate (per 1000 people) across countries in the world in <b> 2018 </b>, it shows guide to capture 0 population growth mark.<br/>
+	        From 2008 to 2018, the graph shows that more and more countries are gravitating towards center of the graph. 
                 <i>Data is taken from WDI.</i><br/>
 	</p>
     </div>
@@ -401,7 +402,7 @@ function update_axis(){
 	    .attr('x', width / 2 + margin)
 	    .attr('y', margin)
 	    .attr('text-anchor', 'middle')
-	    .text('Year:' year);
+	    .text(year);
 	
 	var g = d3.select("#chart").select("svg").append("g");
 	    g.attr("transform","translate(50,50)").call(y_axis);
