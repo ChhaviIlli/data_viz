@@ -185,6 +185,33 @@ async function init(){
 	  .attr("fill",  function(d){return color(d.value);})
 	  .attr("fill-opacity", 0.10)
 	  .attr("d", d3.geoPath());
+	
+	 const voronoi = d3.Delaunay
+  			.from(pop_data2018, d => xScale(d.CBR), d => yScale(d.CDR))
+  			.voronoi([margin, margin, width, height]); // ensures voronoi is limited to the chart area
+
+  	svg.append("g")
+    		.attr("class", "voronoiWrapper")
+    		.selectAll("path")
+    		.data(data)
+    		.join("path")
+      		.attr("opacity", 0.5)
+      		// .attr("stroke", "#ff1493") // Hide overlay
+      		.attr("fill", "none")
+      		.style("pointer-events", "all")
+      		.attr("d", (d,i) => voronoi.renderCell(i))
+      		.on("mouseover", (d, i) => {
+        	 if (d.CDR > 1) {
+          	  svg.append('g')
+            	  .attr("class", "tooltip")
+            	   .attr("transform", `translate(${xScale(d.CBR)},${yScale(d.CDR)})`)
+            	   .call(popover, `Amount: ${d.CDR.toLocaleString(undefined, {style: "decimal"})}
+		   ${d.CBR.toLocaleString(undefined)}
+		  ${d.CDR})
+                  }
+               })
+      		.on("mouseout", () => svg.selectAll('.tooltip').remove());
+
 
 	  // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
 	  // Its opacity is set to 0: we don't see it by default.
