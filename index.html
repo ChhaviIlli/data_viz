@@ -364,10 +364,16 @@ function update_axis(){
 	  .append("line")
 	  .attr("style", "stroke:black")
 	  .attr("x2", xScale(0))
-	  .attr("x1", xScale(20))
+	  .attr("x1", xScale(25))
 	  .attr("y2", yScale(0))
-	  .attr("y1", yScale(20))
+	  .attr("y1", yScale(25))
 	  .attr("stroke-width", 3);
+}
+function tooltip_available(){
+	  d3.select("#chart#).select("svg")
+      		.on("mouseover", function(){
+          	d3.select(this)
+            	.style("background-color", "orange");
 }
 function load_data(){
 	if(slideIndex==1){
@@ -395,6 +401,7 @@ function init_helper(){
 	createContour(data_preprocessed_2008);
 	createScatterplot(data_preprocessed_2008 );
 	update_axis();
+	tooltip_available();
 }
 </script>
 
