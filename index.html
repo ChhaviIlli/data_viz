@@ -416,8 +416,9 @@ function update_axis(){
 	  .attr("stroke-width", 3);
 	
 	d3.select("#chart").select("svg").append('text')
-	    .attr('x', xScale(25))
+	    .attr('x', xScale(25)+margin)
 	    .attr('y', margin)
+	    .attr('transform', 'rotate(-20)')
 	    .attr('text-anchor', 'begin')
 	    .text('Zero population growth guide');
 	
