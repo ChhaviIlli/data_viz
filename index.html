@@ -194,7 +194,8 @@ function showSlides(n) {
   load_data();
 }
 
-
+var data_preprocessed_2008 = null;
+var data_preprocessed_2018 = null;
 async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	const data_preprocessed = pop_data.filter(function(d){
@@ -204,6 +205,15 @@ async function init(){
 					      return d;
 				          }
 	                              })
+	data_preprocessed_2008 = data_preprocessed.filter(function(d){
+				          if(d["MidPeriod"]=="2008"){
+        					return d;
+				          }})
+	
+	data_preprocessed_2018 = data_preprocessed.filter(function(d){
+				          if(d["MidPeriod"]=="2018"){
+        					return d;
+				          }})
 	
 	init_helper(data_preprocessed);
 }
@@ -274,32 +284,21 @@ function createContour(pop_datayear){
 	  .attr("d", d3.geoPath());}
 	
 function load_data(){
-	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
-	const data_preprocessed = pop_data.filter(function(d){
-				          if(d.CBR==0 && d.CDR==0){
-					  }
-		                          else{
-					      return d;
-				          }
-	                              })
 	
-	var year = "2008";
-	if(slideIndex==2){year="2018";}
-	const pop_datayear = data_preprocessed.filter(function(d){
-				          if(d["MidPeriod"]==year){
-        					return d;
-				          }})
-	var circles = d3.select("#chart").select("svg")
-	            .selectAll("circle");
-	    circles.exit().remove();
-	var paths = d3.select("#chart").select("svg")
-	            .selectAll("path");
-	    paths.exit().remove();
-	createContour(pop_datayear);
-	createScatterplot(pop_datayear);
+	if(slideIndex==1){
+		createContour(data_preprocessed_2008);
+		createScatterplot(data_preprocessed_2008);
+	}
+	else if(slideIndex == 2){
+	        createContour(data_preprocessed_2018);
+		createScatterplot(data_preprocessed_2018);
+	}
+	else{
+		
+	}
 }
 					     
-function init_helper(data_preprocessed){
+function init_helper(){
 	//const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	//console.log(pop_data);
 	//console.log(slideIndex);
@@ -318,12 +317,7 @@ function init_helper(data_preprocessed){
 	//				      return d;
 	//			          }
 	//                              })
-	var year = "2008";
-	const pop_datayear = data_preprocessed.filter(function(d){
-				          if(d["MidPeriod"]==year){
-        					return d;
-				          }
-	                              })
+	
 	//console.log(pop_data2018);
 	var canvas_width = 400, canvas_height = 400;
 	var svg = d3.select(chart).append("svg")
@@ -337,8 +331,8 @@ function init_helper(data_preprocessed){
 	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15,20]).tickFormat(d3.format(".0f"));
 
 	
-	createContour(pop_datayear);
-	createScatterplot(pop_datayear );
+	createContour(data_preprocessed_2008);
+	createScatterplot(data_preprocessed_2008 );
 	  // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
 	  // Its opacity is set to 0: we don't see it by default.
 	
