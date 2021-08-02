@@ -116,10 +116,11 @@ img {vertical-align: middle;}
          <p>
                <h1>Birth rate vs death rate worldwide</h1>
                 This scene shows the birth rate and death rate (per 1000 people) across countries in the world in<b> 2008 </b>, it shows guide to capture 0 population growth mark.<br/>
+	        Contour map is showing the density of countries in a given area. Towards the center there are more countries in chart as compared to towards very high birth rate or death rate.
                 <i>Data is taken from WDI.</i><br/>
          </p>
      </div>
-     <div class="text">Birth Rate vs Death Rate</div>
+     <div class="text">"2008"</div>
      
 </div>
 
@@ -129,11 +130,11 @@ img {vertical-align: middle;}
 	<p> 
 		<h1>Birth rate vs death rate worldwide</h1>
                 This scene shows the birth rate and death rate (per 1000 people) across countries in the world in <b> 2018 </b>, it shows guide to capture 0 population growth mark.<br/>
-	        From 2008 to 2018, the graph shows that more and more countries are gravitating towards center of the graph. 
+	        In 2018, more countries are moved towards the center of graph. i.e. as compared to 2008 fewer countries have too high positive or negative population growth.
                 <i>Data is taken from WDI.</i><br/>
 	</p>
     </div>
-    <div class="text">Caption Two</div>
+    <div class="text">2018</div>
    
 </div>
 
@@ -143,6 +144,8 @@ img {vertical-align: middle;}
 	<p> 
 		<h1>Birth rate vs death rate worldwide</h1>
                 This scene shows the birth rate and death rate (per 1000 people) across countries in the world in across 20 years transition period </b>(1998-2018) </b>, it shows guide to capture 0 population growth mark.<br/>
+	        By looking at data starting in 1998 to 2018, it is pretty clear that world is shrinking towards the center i.e. more balanced population growth. And while some countries with birth rate are working on controlling the population by reducing the birth rate.
+	        Some other with higher death rate are reducing their death rate to reach towards zero population growth guide.
                 <i>Data is taken from WDI.</i><br/>
 	</p>
     </div>
@@ -402,27 +405,6 @@ function update_axis(){
 	var g = d3.select("#chart").select("svg").append("g");
 	   g.attr("transform","translate(50,"+(width+margin)+")").call(x_axis);
 	   
-	const annotations = [
-	  {
-	    note: {
-	      label: "Zero Population growth",
-	      title: "Zero Population growth "
-	    },
-	    type: d3.annotationCalloutCircle,
-	    subject: {
-	      radius: 20,         // circle radius
-	      radiusPadding: 20   // white space around circle befor connector
-	    },
-	    color: ["red"],
-	    x: xScale(25),
-	    y:  yScale(25),
-	    dy: 70,
-	    dx: 70
-	  }
-	]
-	
-	const makeAnnotations = d3.annotation()
-  	.annotations(annotations)
 	var g = d3.select("#chart").select("svg").append("g");
 	  g.attr("transform","translate(50,50)")
 	  .append("line")
@@ -431,8 +413,14 @@ function update_axis(){
 	  .attr("x1", xScale(25))
 	  .attr("y2", yScale(0))
 	  .attr("y1", yScale(25))
-	  .attr("stroke-width", 3)
-	  .call(makeAnnotations);
+	  .attr("stroke-width", 3);
+	
+	d3.select("#chart").select("svg").append('text')
+	    .attr('x', xScale(25))
+	    .attr('y', margin)
+	    .attr('text-anchor', 'end')
+	    .text('Zero population growth guide');
+	
 }
 function tooltip_available(){
 	  d3.select("#chart").select("svg")
