@@ -220,7 +220,7 @@ async function init(){
 
 function updateScatterplot(pop_datayear){
 	
-	var width=50, height=50;
+	var width=300, height=300;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
 	  var tooltip = d3.select("#my_dataviz")
@@ -268,7 +268,7 @@ function updateScatterplot(pop_datayear){
 	
 }
 function createScatterplot(pop_datayear ){
-	var width=50, height=50;
+	var width=300, height=300;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
 	  var tooltip = d3.select("#my_dataviz")
@@ -311,7 +311,36 @@ function createScatterplot(pop_datayear ){
     		.on("mouseout", function(){
 			d3.select(this).attr('stroke', null);})	}
 	
-function createContour(pop_datayear){
+function updateContour(pop_datayear){
+	var width = 300, height = 300;
+	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
+	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
+	var color = d3.scaleSequential(d3.interpolateTurbo).domain([0.000, 0.017]); 
+	  var contours = d3.contourDensity()
+	   .x(function(d,i){return xScale(d.CBR);})
+	  .y(function(d,i){return yScale(d.CDR);})
+	 .size([width,height])
+	.bandwidth(20)
+	  (pop_datayear);
+	console.log(contours);
+	
+	var path = d3.select("#chart").select("svg").select("g").selectAll("path")
+                        .data(contours);	
+	path.exit().remove();//remove unneeded path
+        path.enter().append("path")
+                        .attr("r",0);//create any new paths needed
+	//update all paths to new positions
+         path.transition()
+                        .duration(500)
+                        .attr("class", "contour")
+			.attr("stroke","green")
+	  		.attr("stroke-opacity", 0.5)
+		        .attr("fill",  function(d){return color(d.value);})
+	  		.attr("fill-opacity", 0.10)
+	  		.attr("d", d3.geoPath());}
+
+	
+	function createContour(pop_datayear){
 	var width = 300, height = 300;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
@@ -341,15 +370,15 @@ function createContour(pop_datayear){
 	  .attr("fill",  function(d){return color(d.value);})
 	  .attr("fill-opacity", 0.10)
 	  .attr("d", d3.geoPath());}
-	
+
 function load_data(){
 	
 	if(slideIndex==1){
-		createContour(data_preprocessed_2008);
+		updateContour(data_preprocessed_2008);
 		updateScatterplot(data_preprocessed_2008);
 	}
 	else if(slideIndex == 2){
-	        createContour(data_preprocessed_2018);
+	        updateContour(data_preprocessed_2018);
 		updateScatterplot(data_preprocessed_2018);
 	}
 	else{
