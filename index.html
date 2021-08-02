@@ -430,7 +430,7 @@ function load_data(){
 	var yScale=d3.scaleLinear().domain([0,25]).range([300,0]);
 	d3.select("#chart").select("svg").append('text')
 	    .attr('x', xScale(25))
-	    .attr('y', margin)
+	    .attr('y', 50)
 	    .attr('transform', 'rotate(10)')
 	    .attr('text-anchor', 'begin')
             .attr("font-size",8)
@@ -465,7 +465,7 @@ function init_helper(){
 	
 	d3.select("#chart").select("svg").append('text')
 	    .attr('x', xScale(25))
-	    .attr('y', margin)
+	    .attr('y', 50)
 	    .attr('transform', 'rotate(10)')
 	    .attr('text-anchor', 'begin')
             .attr("font-size",8)
