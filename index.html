@@ -123,27 +123,11 @@ img {vertical-align: middle;}
 
 <div class="mySlides fade">
   <div class="numbertext">2 / 3</div>
-    <div>
-         <p>
-               <h1>Birth rate vs death rate worldwide </h1>
-                This scene shows the birth rate and death rate (per 1000 people) across countries in the world in 2018, it shows guide to capture 0 population growth mark.<br/>
-                <i>Data is taken from WDI.</i><br/>
-         </p>
-     </div>
-     <div id="chart" align="center"></div>
   <div class="text">Caption Two</div>
 </div>
 
 <div class="mySlides fade">
   <div class="numbertext">3 / 3</div>
-     <div>
-         <p>
-               <h1>Birth rate vs death rate worldwide </h1>
-                This scene shows the transition in birth rate and death rate (per 1000 people) across countries in the world in last 20 years, it shows guide to capture 0 population growth mark.<br/>
-                <i>Data is taken from WDI.</i><br/>
-         </p>
-     </div>
-     <div id="chart" align="center"></div>
   <div class="text">Caption Three</div>
 </div>
 
@@ -271,7 +255,7 @@ async function init(){
 	.bandwidth(20);
 
 	 contours_data = contours(pop_data2018);
-	  var color = d3.scaleLinear().domain(d3.extent(contours_data)).range(["blue", "yellow","red"]);
+	  var color = d3.interpolateInferno(d3.extent(contours_data));
 	  console.log("reached");
 	 d3.select("svg")
 	  .attr("transform", "translate(50,50)")
