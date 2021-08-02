@@ -188,11 +188,11 @@ function showSlides(n) {
       dots[i].className = dots[i].className.replace(" active", "");
   }
   var chart = document.getElementById("#chart");
-  d3.select(chart).select("svg").selectAll('*').remove();
+  d3.select(chart).selectAll('*').remove();
   var chart = document.getElementById("#chart1");
-  d3.select(chart).select("svg").selectAll('*').remove();
+  d3.select(chart).selectAll('*').remove();
   var chart = document.getElementById("#chart2");
-  d3.select(chart).select("svg").selectAll('*').remove();
+  d3.select(chart).selectAll('*').remove();
   init();
   slides[slideIndex-1].style.display = "block";  
   dots[slideIndex-1].className += " active";
