@@ -159,10 +159,32 @@ async function init(){
 	            .attr("height", canvas_height );
 
 	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
-	var xScale=d3.scaleLinear().domain([1,50]).range([0,width]);
-	var yScale=d3.scaleLinear().domain([1,20]).range([height,0]);
+	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
+	var yScale=d3.scaleLinear().domain([0,20]).range([height,0]);
 	var x_axis=d3.axisBottom(xScale).tickValues([10,20,30,40]).tickFormat(d3.format(".0f"));
 	var y_axis=d3.axisLeft(yScale).tickValues([5,10,15]).tickFormat(d3.format(".0f"));
+
+	
+	var color = d3.scaleSequential(d3.interpolateTurbo).domain([0, 0.015]); 
+	  var contours = d3.contourDensity()
+	   .x(function(d,i){return xScale(d.CBR);})
+	  .y(function(d,i){return yScale(d.CDR);})
+	 .size([width,height])
+	.bandwidth(20)
+	  (pop_data2018);
+	console.log(contours);
+	 var g  = d3.select("svg").append("g");
+	   g.attr("transform","translate(50,50)")
+	  .selectAll("path")
+	  .data(contours)
+	  .enter()
+	  .append("path")
+	  .attr("class", "contour")
+	  .attr("stroke","green")
+	  .attr("stroke-opacity", 0.5)
+	  .attr("fill",  function(d){return color(d.value);})
+	  .attr("fill-opacity", 0.10)
+	  .attr("d", d3.geoPath());
 
 	  // Add a tooltip div. Here I define the general feature of the tooltip: stuff that do not depend on the data point.
 	  // Its opacity is set to 0: we don't see it by default.
@@ -247,47 +269,7 @@ async function init(){
 	  .attr("x1", xScale(20))
 	  .attr("y2", yScale(0))
 	  .attr("y1", yScale(20));
-	
-	  
-   	
-	  //var densityData = d3.contourDensity()
-           // .y(function(d) { return yScale(d.CDR); })
-           // .x(function(d) { return xScale(d.CBR); })
-	   // .size([width,height])
-	   //.bandwidth(20);
-  
-            //var g = svg.append("g")
-	   // g.attr("transform","translate(50,50)")
-	    // .selectAll("path")
-            //.data(densityData)
-            //.enter()
-            //.append("path")
-            //.attr("d", d3.geoPath())
-	    //.attr("stroke", "green")
-	    //.attr("fill", function(d){return color(d);});
        
-
-
-var color = d3.scaleSequential(d3.interpolateTurbo).domain([0, 0.015]); 
-  var contours = d3.contourDensity()
-   .x(function(d,i){return xScale(d.CBR);})
-  .y(function(d,i){return yScale(d.CDR);})
- .size([width,height])
-.bandwidth(20)
-  (pop_data2018);
-console.log(contours);
- var g  = d3.select("svg").append("g");
-   g.attr("transform","translate(50,50)")
-  .selectAll("path")
-  .data(contours)
-  .enter()
-  .append("path")
-  .attr("class", "contour")
-  .attr("stroke","green")
-  .attr("stroke-opacity", 0.5)
-  .attr("fill",  function(d){return color(d.value);})
-  .attr("fill-opacity", 0.10)
-  .attr("d", d3.geoPath());
 	
 
 }
