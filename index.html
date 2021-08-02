@@ -279,10 +279,10 @@ function load_data(){
 				          if(d["MidPeriod"]==year){
         					return d;
 				          }
-	var cicles = d3.select("#chart').select("svg")
+	var circles = d3.select("#chart").select("svg")
 	            .selectAll("circle");
 	    circles.exit().remove();
-	var paths = d3.select(chart).select("svg")
+	var paths = d3.select("#chart").select("svg")
 	            .selectAll("path");
 	    paths.exit().remove();
 	createContour(pop_datayear);
