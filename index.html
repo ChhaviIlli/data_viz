@@ -434,6 +434,7 @@ function tooltip_available(){
             	.style("background-color", "white");})
 }
 function load_data(){
+	update_axis();
 	if(slideIndex==1){
 		updateContour(data_preprocessed_2008, "fast");
 		updateScatterplot(data_preprocessed_2008, "fast");
@@ -454,7 +455,7 @@ function load_data(){
 	     updateContour(data_preprocessed_2018, "slow");
 	     updateScatterplot(data_preprocessed_2018, "slow");
 	}
-	update_axis();
+	
 }
 					     
 function init_helper(){	
@@ -464,10 +465,9 @@ function init_helper(){
         	    .attr("width", canvas_width )
 	            .attr("height", canvas_height );
 
-	
+	update_axis();
 	createContour(data_preprocessed_2008);
 	createScatterplot(data_preprocessed_2008 );
-	update_axis();
 	tooltip_available();
 }
 </script>
