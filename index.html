@@ -191,6 +191,7 @@ var year = "2008"
 async function init(){
 	const pop_data = await d3.csv('WPP2019_Period_Indicators_Medium.csv');
 	console.log(pop_data);
+	console.log(slideIndex);
 	if(slideIndex==1) { year = "2008";}
 	if(slideIndex==2) { 
 		console.log("year is 2018");
