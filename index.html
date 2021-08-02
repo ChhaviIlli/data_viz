@@ -222,7 +222,7 @@ function init_helper(pop_data, year, chart){
 	//				      return d;
 	//			          }
 	//                              })
-	const pop_data2018 = data_preprocessing.filter(function(d){
+	const pop_data2018 = pop_data.filter(function(d){
 				          if(d["MidPeriod"]==year){
         					return d;
 				          }
