@@ -248,39 +248,23 @@ async function init(){
 	  .attr("y2", yScale(0))
 	  .attr("y1", yScale(20));
 	
-	  color = d3.scaleSequential(d3.interpolateMagma).domain([0,0,1]);
-   	
-	  var densityData = d3.contourDensity()
-            .y(function(d) { return yScale(d.CDR); })
-            .x(function(d) { return xScale(d.CBR); })(pop_data2018)
-  
-            var g = svg.append("g")
-	    g.selectAll("path")
-            .data(densityData)
-            .enter()
-            .append("path")
-            .attr("d", d3.geoPath())
-	    .attr("stroke", "green");
-       
+	contours = d3.contourDensity()
+	   .x(function(d,i){return xScale(d.CBR);})
+	  .y(function(d,i){return yScale(d.CDR);})
+	 .size([width+margin,height+margin])
+	.bandwidth(20);
 
-	
-  contours = d3.contourDensity()
-   .x(function(d,i){return xScale(d.CBR);})
-  .y(function(d,i){return yScale(d.CDR);})
- .size([width,height])
-.bandwidth(20);
-	 
- d3.select("svg")
-  .selectAll("path")
-  .data(contours(pop_data2018))
-  .enter()
-  .append("path")
-  .attr("class", "contour")
-  .attr("stroke","green")
-  .attr("fill", "none")
-  .attr("d", d3.geoPath());
-	
-
+	  color = d3.scaleSequential(d3.extent(contours(pop_data2018)), d3.interpolateInferno));
+	  
+	 d3.select("svg")
+	  .selectAll("path")
+	  .data(contours(pop_data2018))
+	  .enter()
+	  .append("path")
+	  .attr("class", "contour")
+	  .attr("stroke","green")
+	  .attr("fill", "none")
+	  .attr("d", d3.geoPath());
 }
 
 
