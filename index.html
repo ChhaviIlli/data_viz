@@ -255,7 +255,7 @@ async function init(){
 	.bandwidth(20);
 
 	 contours_data = contours(pop_data2018);
-	  var color = d3.interpolateInferno(d3.extent(contours_data));
+	  var color = d3.scaleLinear().domain([0,1]).range(["blue","yellow","red"]);
 	  console.log("reached");
 	 d3.select("svg")
 	  .attr("transform", "translate(50,50)")
