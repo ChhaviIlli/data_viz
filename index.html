@@ -256,7 +256,7 @@ async function init(){
   
             var g = svg.append("g")
 	    g.selectAll("path")
-            .data(pop_data2018)
+            .data(densityData)
             .enter()
             .append("path")
             .attr("d", d3.geoPath())
