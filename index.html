@@ -136,6 +136,14 @@ img {vertical-align: middle;}
 
 <div class="mySlides fade">
   <div class="numbertext">3 / 3</div>
+	<div>
+	<p> 
+		<h1>Birth rate vs death rate worldwide</h1>
+                This scene shows the birth rate and death rate (per 1000 people) across countries in the world in <b> across ~20 years transition period(2000-2018) </b>, it shows guide to capture 0 population growth mark.<br/>
+                <i>Data is taken from WDI.</i><br/>
+	</p>
+    </div>
+    <div id="chart2" align="center"></div>
   <div class="text">Caption Three</div>
 </div>
 
@@ -209,7 +217,7 @@ async function init(){
            svg = d3.select("#chart1").append("svg");
 	}
 	else{
-	   svg = d3.select(#chart2").append("svg");
+	   svg = d3.select("#chart2").append("svg");
         }
         svg.attr("width", canvas_width )
 	   .attr("height", canvas_height );
