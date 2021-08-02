@@ -254,17 +254,18 @@ async function init(){
 	 .size([width+margin,height+margin])
 	.bandwidth(20);
 
-	  var color = d3.scaleSequential(d3.interpolateInferno).domain([0,0,1]);
+	 contours_data = contours(pop_data(2018)));
+	  var color = d3.scaleSequential().domain(d3.extent(contours_data)).range(d3.interpolateInferno);
 	  
 	 d3.select("svg")
 	  .attr("transform", "translate(50,50)")
 	  .selectAll("path")
-	  .data(contours(pop_data2018))
+	  .data(contours_data)
 	  .enter()
 	  .append("path")
 	  .attr("class", "contour")
 	  .attr("stroke","none")
-	  .attr("fill", function(d){return color(contours(d));} )
+	  .attr("fill", function(d){return color(d);} )
 	  .attr("d", d3.geoPath());
 }
 
