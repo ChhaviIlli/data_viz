@@ -191,8 +191,7 @@ async function init(){
 	  // Its opacity is set to 0: we don't see it by default.
 	  var tooltip = d3.select("#my_dataviz")
 	    .append("div")
-	    .text("...")
-	    .style("opacity", 0.5)
+	    .style("opacity", 0)
 	    .attr("class", "tooltip")
 	    .style("background-color", "white")
 	    .style("border", "solid")
@@ -221,8 +220,16 @@ async function init(){
 	    tooltip
 	      .transition()
 	      .duration(200)
-	      .style("opacity", 1)
+	      .style("opacity", 0)
 	  }
+
+	var g = svg.append("g")
+	        .append("title")
+	        .text("...")
+	.on("mouseover", function(){
+			d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
+    		.on("mouseout", function(){
+			d3.select(this).attr('stroke', null);})
 
 	var g = svg.append("g")
 		g.attr("transform","translate(50,50)")
@@ -237,7 +244,7 @@ async function init(){
 	    	.on("mouseover", function(){
 			d3.select(this).attr('stroke', 'black').attr('stroke-width',1);})
     		.on("mouseout", function(){
-			d3.select(this).attr('stroke', 'grey');})
+			d3.select(this).attr('stroke', null);})
 
 	svg.append('text')
            .attr('x', -(height / 2) - margin)
