@@ -326,10 +326,10 @@ function updateContour(pop_datayear){
 	  .attr("fill-opacity", 0.10)
 	  .attr("d", d3.geoPath());}
 
-function load_data(){
-	var canvas_width = 400, canvas_height = 400;
-	var svg = d3.select("#chart").select("svg")
-        
+function update_axis(){
+	var svg = d3.select("#chart").select("svg");
+	
+        var canvas_width = 400, canvas_height = 400;        
 	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
@@ -366,7 +366,9 @@ function load_data(){
 	  .attr("x2", xScale(0))
 	  .attr("x1", xScale(20))
 	  .attr("y2", yScale(0))
-	  .attr("y1", yScale(20));
+	  .attr("y1", yScale(20));	
+}
+function load_data(){
 	if(slideIndex==1){
 		updateContour(data_preprocessed_2008);
 		updateScatterplot(data_preprocessed_2008);
@@ -378,6 +380,7 @@ function load_data(){
 	else{
 		
 	}
+	updateAxis();
 }
 					     
 function init_helper(){
