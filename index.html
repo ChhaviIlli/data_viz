@@ -222,11 +222,11 @@ function updateScatterplot(pop_datayear){
 	var width=300, height=300;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
 	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
-	var circle = d3.select("#chart").select("svg").select("g").selectAll("circle")
+	var circle = d3.select("#chart").select("svg").selectAll("circle")
                         .data(pop_datayear);	
-	//circle.exit().remove();//remove unneeded circles
-        //circle.enter().append("circle")
-          //              .attr("r",0);//create any new circles needed
+	circle.exit().remove();//remove unneeded circles
+        circle.enter().append("circle")
+                        .attr("r",0);//create any new circles needed
 	//update all circles to new positions
          circle.transition()
                         .duration(500)
@@ -291,11 +291,11 @@ function updateContour(pop_datayear){
 	  (pop_datayear);
 	console.log(contours);
 	
-	var path = d3.select("#chart").select("svg").select("g").selectAll("path")
+	var path = d3.select("#chart").select("svg").selectAll("path")
                         .data(contours);	
-	//path.exit().remove();//remove unneeded path
-        //path.enter().append("path")
-         //               .attr("r",0);//create any new paths needed
+	path.exit().remove();//remove unneeded path
+        path.enter().append("path")
+                       .attr("r",0);//create any new paths needed
 	//update all paths to new positions
          path.transition()
                         .duration(500)
