@@ -130,7 +130,7 @@ img {vertical-align: middle;}
                 <i>Data is taken from WDI.</i><br/>
 	</p>
     </div>
-    <div id="chart" align="center"></div>
+    <div id="chart1" align="center"></div>
   <div class="text">Caption Two</div>
 </div>
 
@@ -201,9 +201,18 @@ async function init(){
 	                              })
 	console.log(pop_data2018);
 	var canvas_width = 400, canvas_height = 400;
-	var svg = d3.select("#chart").append("svg")
-        	    .attr("width", canvas_width )
-	            .attr("height", canvas_height );
+	var svg = d3.select("#chart");
+	if(year=="2008"){
+	   svg = d3.select("#chart").append("svg");
+	}
+	else if(year == "2018"){
+           svg = d3.select("#chart1").append("svg");
+	}
+	else{
+	   svg = d3.select(#chart2").append("svg");
+        }
+        svg.attr("width", canvas_width )
+	   .attr("height", canvas_height );
 
 	var width = canvas_height - 100,height=canvas_height -100, margin = 50;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
