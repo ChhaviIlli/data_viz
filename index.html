@@ -215,7 +215,7 @@ async function init(){
         					return d;
 				          }})
 	
-	init_helper(data_preprocessed);
+	init_helper();
 }
 
 	
@@ -262,6 +262,8 @@ function createScatterplot(pop_datayear ){
 	
 function createContour(pop_datayear){
 	var width = 300, height = 300;
+	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
+	var yScale=d3.scaleLinear().domain([0,25]).range([height,0]);
 	var color = d3.scaleSequential(d3.interpolateTurbo).domain([0.000, 0.017]); 
 	  var contours = d3.contourDensity()
 	   .x(function(d,i){return xScale(d.CBR);})
