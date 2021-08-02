@@ -199,8 +199,10 @@ async function init(){
 					      return d;
 				          }
 	                              })
-	init_helper(data_preprocessed, "2008", "#chart");
-	init_helper(data_preprocessed, "2018", "#chart1");
+	if(slideNumber==1){
+	   init_helper(data_preprocessed, "2008", "#chart");}
+	else{
+	   init_helper(data_preprocessed, "2018", "#chart1");}
 }
 	
 function init_helper(pop_data, year, chart){
