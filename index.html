@@ -415,14 +415,6 @@ function update_axis(){
 	  .attr("y1", yScale(25))
 	  .attr("stroke-width", 3);
 	
-	d3.select("#chart").select("svg").append('text')
-	    .attr('x', xScale(25))
-	    .attr('y', margin)
-	    .attr('transform', 'rotate(10)')
-	    .attr('text-anchor', 'begin')
-            .attr("font-size",8)
-	    .text('0 population growth line');
-	
 }
 function tooltip_available(){
 	  d3.select("#chart").select("svg")
@@ -434,7 +426,15 @@ function tooltip_available(){
             	.style("background-color", "white");})
 }
 function load_data(){
-	update_axis();
+	var xScale=d3.scaleLinear().domain([0,50]).range([0,300]);
+	var yScale=d3.scaleLinear().domain([0,25]).range([300,0]);
+	d3.select("#chart").select("svg").append('text')
+	    .attr('x', xScale(25))
+	    .attr('y', margin)
+	    .attr('transform', 'rotate(10)')
+	    .attr('text-anchor', 'begin')
+            .attr("font-size",8)
+	    .text('0 population growth line');
 	if(slideIndex==1){
 		updateContour(data_preprocessed_2008, "fast");
 		updateScatterplot(data_preprocessed_2008, "fast");
@@ -455,19 +455,30 @@ function load_data(){
 	     updateContour(data_preprocessed_2018, "slow");
 	     updateScatterplot(data_preprocessed_2018, "slow");
 	}
-	
+	update_axis();
 }
 					     
 function init_helper(){	
 	//console.log(pop_data2018);
+	var xScale=d3.scaleLinear().domain([0,50]).range([0,300]);
+	var yScale=d3.scaleLinear().domain([0,25]).range([300,0]);
+	
+	d3.select("#chart").select("svg").append('text')
+	    .attr('x', xScale(25))
+	    .attr('y', margin)
+	    .attr('transform', 'rotate(10)')
+	    .attr('text-anchor', 'begin')
+            .attr("font-size",8)
+	    .text('0 population growth line');
 	var canvas_width = 400, canvas_height = 400;
 	var svg = d3.select(chart).append("svg")
         	    .attr("width", canvas_width )
 	            .attr("height", canvas_height );
 
-	update_axis();
+	
 	createContour(data_preprocessed_2008);
 	createScatterplot(data_preprocessed_2008 );
+	update_axis();
 	tooltip_available();
 }
 </script>
