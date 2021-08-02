@@ -256,21 +256,8 @@ function updateScatterplot(pop_datayear, speed){
                         .attr("cy",function(d){return yScale(d.CDR);})
                         .attr("r",4);
 	}
-		var year = "2008"
-	if(slideIndex==1){year = "2008";}
-	else if(slideIndex==2){year = "2018";}
-	else{year = "1998-2018";}
-	
 }
 
-// Add annotation to the chart
-const makeAnnotations = d3.annotation()
-  .annotations(annotations)
-d3.select("#example4")
-  .append("g")
-  .call(makeAnnotations)
-	
-}
 function createScatterplot(pop_datayear ){
 	var width=300, height=300;
 	var xScale=d3.scaleLinear().domain([0,50]).range([0,width]);
