@@ -277,7 +277,7 @@ var color = d3.scaleSequential(d3.interpolateYlGnBu).domain([0, 0.015]);
   (pop_data2018);
 console.log(contours);
  var g  = d3.select("svg").append("g");
-   g.attr("transform","translate(50,0)")
+   g.attr("transform","translate(100,0)")
   .selectAll("path")
   .data(contours)
   .enter()
@@ -286,7 +286,7 @@ console.log(contours);
   .attr("stroke","green")
   .attr("stroke-opacity", 0.5)
   .attr("fill",  function(d){return color(d.value);})
-  .attr("fill-opacity", 0.5)
+  .attr("fill-opacity", 0.25)
   .attr("d", d3.geoPath());
 	
 
